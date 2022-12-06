@@ -43,7 +43,7 @@ const getTodo = rest.get('https://jsonplaceholder.typicode.com/todos/:todo', asy
     ctx.status(200),
     ctx.json({
       ...originData,
-      id: req.params.todo,
+      id: Number(req.params.todo),
     }),
   );
 });
