@@ -18,10 +18,10 @@ const queryClient = new QueryClient({
       refetchOnWindowFocus: false,
       retry: false,
       networkMode: 'always',
+      suspense: true,
     },
   }
 });
-
 
 (async () => {
   if (process.env.NODE_ENV === 'development') {
@@ -37,8 +37,10 @@ const queryClient = new QueryClient({
 
   root.render(
     <QueryClientProvider client={queryClient}>
-      <App />
-      
+      <React.Suspense fallback={<div>로딩 중....</div>}>
+        <App />
+      </React.Suspense>
+
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
