@@ -11,11 +11,11 @@ const getTodos = rest.get('https://jsonplaceholder.typicode.com/todos', (req, re
       "id": 1,
       "title": "MSW-TEST",
       "completed": true,
-    }])
-  )
+    }]),
+  );
 });
 
-const getTransFormedTodos = rest.get('https://jsonplaceholder.typicode.com/todos', async (req, res, ctx) => {
+const getMyTodos = rest.get('https://jsonplaceholder.typicode.com/todos', async (req, res, ctx) => {
   const originResponse = await ctx.fetch(req);
 
   const originData: types.Todo[]  = await (originResponse.json());
@@ -25,18 +25,31 @@ const getTransFormedTodos = rest.get('https://jsonplaceholder.typicode.com/todos
     .map(item => ({
       ...item,
       username: 'tester',
-    }))
-
-  
+    }));
 
   return res(
     ctx.status(200),
     ctx.delay(1000),
-    ctx.json(myData)
+    ctx.json(myData),
+  );
+});
+
+const getTodo = rest.get('https://jsonplaceholder.typicode.com/todos/:todo', async (req, res, ctx) => {
+  const originResponse = await ctx.fetch(req);
+
+  const originData: types.Todo = await (originResponse.json());
+
+  return res(
+    ctx.status(200),
+    ctx.json({
+      ...originData,
+      id: req.params.todo,
+    }),
   );
 });
 
 export const handlers = [
   // getTodos,
-  // getTransFormedTodos,
+  // getMyTodos,
+  // getTodo,
 ];
