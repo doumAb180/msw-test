@@ -11,7 +11,7 @@ const fetchTodo = (id: number) => (
 
 const useFetchTodo = (id: number) => (
   useQuery<types.Todo>({
-    queryKey: ['todos', id],
+    queryKey: ['todo', id],
     queryFn: async () => {
       const { data } = await fetchTodo(id);
 
